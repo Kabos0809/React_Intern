@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Button, FormControl, TextField, Typography } from '@mui/material'
-import { auth } from './firebaseConfig'
+import { auth } from 'config/firebaseConfig'
 
 const Login: React.FC = (props: any) => {
   const [isLogin, setIsLogin] = useState(true)
