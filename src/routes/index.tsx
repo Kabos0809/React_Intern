@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from 'components/Login'
 import App from 'App'
 
-export const RouterConf: React.FC = () => {
+const RouterConf: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -13,3 +13,5 @@ export const RouterConf: React.FC = () => {
     </BrowserRouter>
   )
 }
+
+export default RouterConf
