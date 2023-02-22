@@ -1,5 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Route, BrowserRouter } from 'react-router-dom'
-import Login from './Login'
-import App from './App'
+import './index.css'
+import reportWebVitals from './reportWebVitals'
+import { RouterConf } from 'routes/index'
+
+ReactDOM.render(
+  <React.StrictMode>
+    <RouterConf />
+  </React.StrictMode>,
+  document.getElementById('root'),
+)
+
+reportWebVitals()
