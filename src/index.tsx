@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
-import reportWebVitals from './reportWebVitals'
+import 'index.css'
 import { RouterConf } from 'routes/index'
 
 ReactDOM.render(
@@ -10,5 +9,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root'),
 )
-
-reportWebVitals()
