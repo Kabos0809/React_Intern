@@ -1,14 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { Button, FormControl, TextField } from '@mui/material'
-import { getAuth } from 'firebase/auth'
 
-const Chat: React.FC = () => {
+const Chat: React.FC = (props: any) => {
   const [chatMsg, setChatMsg] = useState('')
-  const [sendUser, setSendUser] = useState('')
 
   return (
     <div className="Chat">
-      <FormControl></FormControl>
+      <FormControl>
+        <TextField
+          InputLabelProps={{
+            shrink: true,
+          }}
+          name="message"
+          label="メッセージ"
+          value={chatMsg}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setChatMsg(e.target.value)
+          }
+        />
+      </FormControl>
+      <FormControl>
+        <Button variant="contained" color="primary" />
+      </FormControl>
     </div>
   )
 }
