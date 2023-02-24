@@ -7,7 +7,12 @@ const ConvertDate4Unix = (date: Date): number => {
   return unix
 }
 
-const Chat: React.FC = (props: any) => {
+const ConvertUnix4Date = (unix: number): Date => {
+  const date: Date = new Date(unix * 1000)
+  return date
+}
+
+export const Chat: React.FC = (props: any) => {
   const today: Date = new Date()
   const [chatMsg, setChatMsg] = useState('')
 
@@ -41,4 +46,8 @@ const Chat: React.FC = (props: any) => {
   )
 }
 
-export default Chat
+export const PastChats: React.FC = (props: any) => {
+  const PastChat: ChatLog = {
+    chats: localStorage.getItem('ChatLog'),
+  }
+}
