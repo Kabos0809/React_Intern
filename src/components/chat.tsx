@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Button, FormControl, TextField } from '@mui/material'
+import { getAuth } from 'firebase/auth'
+
+const ConvertDate4Unix = (date: Date): number => {
+  const unix: number = Math.round(date.getTime() / 1000)
+  return unix
+}
 
 const Chat: React.FC = (props: any) => {
+  const today: Date = new Date()
   const [chatMsg, setChatMsg] = useState('')
 
   return (
@@ -19,9 +26,17 @@ const Chat: React.FC = (props: any) => {
           }
         />
       </FormControl>
-      <FormControl>
-        <Button variant="contained" color="primary" />
-      </FormControl>
+      <Button
+        variant="contained"
+        color="primary"
+        size="small"
+        onClick={async () => {
+          const msg: Chat = {
+            text: chatMsg,
+            sended_at: ConvertDate4Unix(today),
+          }
+        }}
+      />
     </div>
   )
 }
