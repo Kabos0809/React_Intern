@@ -1,9 +1,9 @@
-type Chat = {
+export type Msg = {
   send_user: string
   text: string
   sended_at: number
 }
 
-type ChatLog = {
-  chats: Chat[]
+export type ChatLog = {
+  chats: Msg[]
 }

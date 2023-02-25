@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, FormControl, TextField } from '@mui/material'
 import { Auth, getAuth } from '@firebase/auth'
+import { Msg, ChatLog } from 'types/chattype'
 
 const ConvertDate4Unix = (date: Date): number => {
   const unix: number = Math.round(date.getTime() / 1000)
@@ -12,7 +13,7 @@ const ConvertUnix4Date = (unix: number): Date => {
   return date
 }
 
-const AddMsg4NewLog = (msg: Chat) => {
+const AddMsg4NewLog = (msg: Msg) => {
   try {
     let newLog: ChatLog = {
       chats: [msg],
@@ -23,7 +24,7 @@ const AddMsg4NewLog = (msg: Chat) => {
   }
 }
 
-const AddMsg = (logs: ChatLog, msg: Chat) => {
+const AddMsg = (logs: ChatLog, msg: Msg) => {
   try {
     logs.chats.push(msg)
     localStorage.setItem('ChatLog', JSON.stringify(logs))
@@ -37,8 +38,12 @@ export const Chat: React.FC = (props: any) => {
   const [chatMsg, setChatMsg] = useState('')
   const [sendUser, setSendUser] = useState('名無しさん')
 
+  useEffect(() => {
+    const
+  })
+
   return (
-    <div className="Chat">
+    <div className="Msg">
       <FormControl>
         <TextField
           InputLabelProps={{
@@ -71,7 +76,7 @@ export const Chat: React.FC = (props: any) => {
         size="small"
         onClick={async () => {
           try {
-            const msg: Chat = {
+            const msg: Msg = {
               text: chatMsg,
               send_user: sendUser,
               sended_at: ConvertDate4Unix(today),
@@ -90,7 +95,7 @@ export const Chat: React.FC = (props: any) => {
   )
 }
 
-export const PastChats: React.FC = (props: any) => {
+export const PastChats: React.FC = () => {
   const chat: ChatLog = JSON.parse(
     localStorage.getItem('ChatLog') as string,
   ) as ChatLog
