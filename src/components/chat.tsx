@@ -12,10 +12,6 @@ const ConvertUnix4Date = (unix: number): Date => {
   return date
 }
 
-const GetUser = (): Auth => {
-  const auth: Auth = getAuth()
-}
-
 const AddMsg4NewLog = (msg: Chat) => {
   try {
     let newLog: ChatLog = {
