@@ -3,7 +3,3 @@ export type Msg = {
   text: string
   sended_at: number
 }
-
-export type ChatLog = {
-  chats: Msg[]
-}
