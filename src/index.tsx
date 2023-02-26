@@ -1,12 +1,11 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
+import ReactDOM from 'react-dom'
 import 'index.css'
 import RouterConf from 'routes/index'
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
-
-root.render(
+ReactDOM.render(
   <React.StrictMode>
     <RouterConf />
   </React.StrictMode>,
+  document.getElementById('root'),
 )
