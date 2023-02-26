@@ -1,5 +1,8 @@
-export type Msg = {
-  send_user: string
-  text: string
-  sended_at: number
+export class Msg {
+  constructor(public name: string) {
+    this.Name = name
+  }
+  Name: string
+  Date: number = 0
+  Text: string = ''
 }
