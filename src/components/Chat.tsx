@@ -2,13 +2,21 @@ import React, { useEffect, useState } from 'react'
 import { io } from 'socket.io-client'
 import { Msg } from 'types/chattype'
 import { Button, FormErrorMessage } from '@chakra-ui/react'
-import { List, ListItem, HStack, Text, Stack, VStack } from '@chakra-ui/layout'
+import {
+  List,
+  ListItem,
+  HStack,
+  Text,
+  Stack,
+  VStack,
+  Box,
+} from '@chakra-ui/layout'
 import { Input, InputGroup, InputRightElement } from '@chakra-ui/input'
 import { ArrowUpIcon, SmallCloseIcon } from '@chakra-ui/icons'
 
 const socket = io('http://localhost:3000')
 socket.on('connect', () => {
-  console.log(socket.connect())
+  console.log('Connected Server!')
 })
 
 const convertDate4Unix = (date: Date): number => {
@@ -21,22 +29,28 @@ const convertUnix4Date = (unix: number): Date => {
   return date
 }
 
-const senderName = (): string => {
+const getSenderName = (): string => {
   const name = localStorage.getItem('sender_name')
-  name != null
-    ? () => {
-        return name
-      }
-    : () => {
-        return '名無しさん'
-      }
+  if (name != null) {
+    return name
+  }
   return '名無しさん'
 }
 
-const Chat: React.FC = (props: any) => {
-  const name: string = senderName()
+const getChatLog = (): Msg[] => {
+  const item = localStorage.getItem('chat_log')
+  if (item != null) {
+    const chatLogs: Msg[] = JSON.parse(item) as Msg[]
+    return chatLogs
+  }
+  return [] as Msg[]
+}
+
+const Chat: React.FC = () => {
+  const name: string = getSenderName()
   let msg: Msg = new Msg(name)
-  const [chatLogs, setChatLogs] = useState<Msg[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [chatLogs, setChatLogs] = useState<Msg[]>(getChatLog())
   const [chatMsg, setChatMsg] = useState('')
   const [sendUser, setSendUser] = useState(msg.Name)
 
@@ -44,7 +58,9 @@ const Chat: React.FC = (props: any) => {
 
   useEffect(() => {
     socket.on('chat', (msg) => {
+      setIsLoading(!isLoading)
       setChatLogs((chatLogs) => [...chatLogs, msg])
+      localStorage.setItem('chat_log', JSON.stringify(chatLogs))
     })
   }, [])
 
@@ -57,6 +73,7 @@ const Chat: React.FC = (props: any) => {
   }
 
   const onClickSend = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setIsLoading(!isLoading)
     msg.Name = sendUser
     msg.Date = convertDate4Unix(new Date())
     msg.Text = chatMsg
@@ -69,7 +86,7 @@ const Chat: React.FC = (props: any) => {
     <div className="chat">
       <VStack>
         <div className="chatlog">
-          <List w={600}>
+          <List w={600} spacing={2}>
             {chatLogs.map((data, index) => {
               const date = convertUnix4Date(data.Date)
               return (
@@ -77,9 +94,14 @@ const Chat: React.FC = (props: any) => {
                   <HStack>
                     <Stack>
                       <Text fontSize="xs">{data.Name}</Text>
-                      <Text fontSize="md" w={250} overflowWrap="break-word">
+                      <Box
+                        fontSize="md"
+                        w={250}
+                        overflowWrap="break-word"
+                        bg="white"
+                      >
                         {data.Text}
-                      </Text>
+                      </Box>
                     </Stack>
                     <Text fontSize="xs">{date.toString()}</Text>
                   </HStack>
@@ -91,32 +113,39 @@ const Chat: React.FC = (props: any) => {
         <div className="msg">
           <InputGroup>
             <InputRightElement>
-              {!isError ? (
-                <Button
-                  isLoading
-                  loadingText="Submitting"
-                  colorScheme="teal"
-                  variant="outline"
-                  onClick={onClickSend}
-                >
-                  <ArrowUpIcon />
-                </Button>
-              ) : (
-                <SmallCloseIcon />
-              )}
+              <Button
+                isLoading={isLoading}
+                loadingText="Submitting"
+                colorScheme="teal"
+                variant="outline"
+                onClick={onClickSend}
+              >
+                <ArrowUpIcon />
+              </Button>
             </InputRightElement>
-            <Input
-              w={600}
-              h={45}
-              placeholder="メッセージを送ろう"
-              value={chatMsg}
-              onChange={onChangeMessage}
-            />
-            {isError ? (
-              <></>
-            ) : (
-              <FormErrorMessage>メッセージを入力してください</FormErrorMessage>
-            )}
+            <Stack>
+              <Input
+                w={200}
+                h={45}
+                placeholder="名前"
+                value={sendUser}
+                onChange={onChangeSenderName}
+              />
+              <Input
+                w={600}
+                h={45}
+                placeholder="メッセージを送ろう"
+                value={chatMsg}
+                onChange={onChangeMessage}
+              />
+              {isError ? (
+                <></>
+              ) : (
+                <FormErrorMessage>
+                  メッセージを入力してください
+                </FormErrorMessage>
+              )}
+            </Stack>
           </InputGroup>
         </div>
       </VStack>

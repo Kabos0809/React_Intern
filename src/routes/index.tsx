@@ -8,7 +8,7 @@ const RouterConf: React.FC = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Chat />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   )

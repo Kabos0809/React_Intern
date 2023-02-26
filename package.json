@@ -17,6 +17,7 @@
     "@types/react-router-dom": "^5.3.3",
     "firebase": "^8.8.0",
     "framer-motion": "^4",
+    "http": "^0.0.1-security",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1",
@@ -30,7 +31,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "dev": "node src/server/index.js"
   },
   "eslintConfig": {
     "extends": [
