@@ -12,7 +12,7 @@ import {
   Box,
 } from '@chakra-ui/layout'
 import { Input, InputGroup, InputRightElement } from '@chakra-ui/input'
-import { ArrowUpIcon, SmallCloseIcon } from '@chakra-ui/icons'
+import { ArrowUpIcon } from '@chakra-ui/icons'
 
 const socket = io('http://localhost:3000')
 socket.on('connect', () => {
