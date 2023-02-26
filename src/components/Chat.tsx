@@ -11,10 +11,9 @@ import {
   VStack,
   Box,
 } from '@chakra-ui/layout'
-import { Input, InputGroup, InputRightElement } from '@chakra-ui/input'
-import { ArrowUpIcon } from '@chakra-ui/icons'
+import { Input, InputGroup, InputRightElement } from '@chakra-ui/react'
 
-const socket = io('http://localhost:3000')
+const socket = io('http://localhost:4000')
 socket.on('connect', () => {
   console.log('Connected Server!')
 })
@@ -49,7 +48,6 @@ const getChatLog = (): Msg[] => {
 const Chat: React.FC = () => {
   const name: string = getSenderName()
   let msg: Msg = new Msg(name)
-  const [isLoading, setIsLoading] = useState(false)
   const [chatLogs, setChatLogs] = useState<Msg[]>(getChatLog())
   const [chatMsg, setChatMsg] = useState('')
   const [sendUser, setSendUser] = useState(msg.Name)
@@ -58,7 +56,6 @@ const Chat: React.FC = () => {
 
   useEffect(() => {
     socket.on('chat', (msg) => {
-      setIsLoading(!isLoading)
       setChatLogs((chatLogs) => [...chatLogs, msg])
       localStorage.setItem('chat_log', JSON.stringify(chatLogs))
     })
@@ -73,7 +70,6 @@ const Chat: React.FC = () => {
   }
 
   const onClickSend = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setIsLoading(!isLoading)
     msg.Name = sendUser
     msg.Date = convertDate4Unix(new Date())
     msg.Text = chatMsg
@@ -114,13 +110,12 @@ const Chat: React.FC = () => {
           <InputGroup>
             <InputRightElement>
               <Button
-                isLoading={isLoading}
-                loadingText="Submitting"
+                loadingText="Sending"
                 colorScheme="teal"
                 variant="outline"
                 onClick={onClickSend}
               >
-                <ArrowUpIcon />
+                Send
               </Button>
             </InputRightElement>
             <Stack>

@@ -8,7 +8,14 @@ import {
   Stack,
 } from '@chakra-ui/react'
 import { ViewIcon } from '@chakra-ui/icons'
-import { auth } from 'config/firebaseConfig'
+import {
+  getAuth,
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth'
+
+const auth = getAuth()
 
 const Login: React.FC = (props: any) => {
   const [isShow, setShow] = useState(false)
@@ -17,7 +24,7 @@ const Login: React.FC = (props: any) => {
   const [pw, setPW] = useState('')
 
   useEffect(() => {
-    const unSub = auth.onAuthStateChanged((user) => {
+    const unSub = onAuthStateChanged(auth, (user) => {
       user && props.history.push('/')
     })
     return () => unSub()
@@ -58,7 +65,7 @@ const Login: React.FC = (props: any) => {
               isLogin
                 ? async () => {
                     try {
-                      await auth.signInWithEmailAndPassword(email, pw)
+                      await signInWithEmailAndPassword(auth, email, pw)
                       props.history.push('/')
                     } catch (e) {
                       console.log(e)
@@ -66,7 +73,7 @@ const Login: React.FC = (props: any) => {
                   }
                 : async () => {
                     try {
-                      await auth.createUserWithEmailAndPassword(email, pw)
+                      await createUserWithEmailAndPassword(auth, email, pw)
                       props.history.push('/')
                     } catch (e) {
                       console.log(e)
