@@ -32,7 +32,7 @@
     "eject": "react-scripts eject",
     "prepare": "husky install",
     "lint-staged": "lint-staged",
-    "dev": "node src/server/index.js"
+    "dev": "npx node src/server/index.js"
   },
   "eslintConfig": {
     "extends": [
