@@ -15,12 +15,14 @@ import {
   signInWithEmailAndPassword,
 } from 'firebase/auth'
 import auth from 'config/firebaseConfig'
+import { useNavigate } from 'react-router'
 
 const Login: React.FC = (props: any) => {
   const [isShow, setShow] = useState<boolean>(false)
   const [isLogin, setIsLogin] = useState<boolean>(true)
   const [email, setEmail] = useState<string>('')
   const [pw, setPW] = useState<string>('')
+  const navigate = useNavigate()
 
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, (user) => {
@@ -29,24 +31,20 @@ const Login: React.FC = (props: any) => {
     return () => unSub()
   }, [])
 
-  const onClickSubmit = () => {
+  const onClickSubmit = async () => {
     if (isLogin) {
-      return async () => {
-        try {
-          await signInWithEmailAndPassword(auth, email, pw)
-          props.history.push('/')
-        } catch (e) {
-          console.log(e)
-        }
+      try {
+        await signInWithEmailAndPassword(auth, email, pw)
+        navigate('/')
+      } catch (e) {
+        console.log(e)
       }
     } else {
-      return async () => {
-        try {
-          await createUserWithEmailAndPassword(auth, email, pw)
-          props.history.push('/')
-        } catch (e) {
-          console.log(e)
-        }
+      try {
+        await createUserWithEmailAndPassword(auth, email, pw)
+        navigate('/')
+      } catch (e) {
+        console.log(e)
       }
     }
   }

@@ -69,11 +69,11 @@ const Chat: React.FC = () => {
 
   return (
     <ChakraProvider>
-      <Box bg={'white'} h={720}>
+      <Box bg={'white'} h={620}>
         <div className="chat">
           <VStack>
             <div className="chatlog">
-              <List w={650} h={580} spacing={2} overflowY="scroll">
+              <List w={650} h={550} spacing={2} overflowY="scroll">
                 {chatLogs.map((data, index) => {
                   return (
                     <ListItem
