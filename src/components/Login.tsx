@@ -17,7 +17,7 @@ import {
 import auth from 'config/firebaseConfig'
 import { useNavigate } from 'react-router'
 
-const Login: React.FC = (props: any) => {
+const Login: React.FC = () => {
   const [isShow, setShow] = useState<boolean>(false)
   const [isLogin, setIsLogin] = useState<boolean>(true)
   const [email, setEmail] = useState<string>('')
@@ -25,9 +25,7 @@ const Login: React.FC = (props: any) => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const unSub = onAuthStateChanged(auth, (user) => {
-      user && props.history.push('/')
-    })
+    const unSub = onAuthStateChanged(auth, (user) => user)
     return () => unSub()
   }, [])
 
