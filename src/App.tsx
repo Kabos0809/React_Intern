@@ -1,7 +1,6 @@
 import React from 'react'
 import logo from 'logo.svg'
 import 'App.css'
-import { Link } from 'react-router-dom'
 
 const App: React.FC = () => {
   return (
@@ -20,9 +19,6 @@ const App: React.FC = () => {
           Learn React
         </a>
       </header>
-      <body>
-        <Link to="/login">ログイン</Link>
-      </body>
     </div>
   )
 }

@@ -69,70 +69,69 @@ const Chat: React.FC = () => {
 
   return (
     <ChakraProvider>
-      <div className="chat">
-        <VStack>
-          <div className="chatlog">
-            <List w={650} h={580} spacing={2} overflowY="scroll">
-              {chatLogs.map((data, index) => {
-                return (
-                  <ListItem key={index}>
-                    <HStack>
-                      <Stack spacing={0.5}>
-                        <Text fontSize="xs" color={'gray.500'}>
-                          {data.Name}
+      <Box bg={'gray.50'} h={720}>
+        <div className="chat">
+          <VStack>
+            <div className="chatlog">
+              <List w={650} h={580} spacing={2} overflowY="scroll">
+                {chatLogs.map((data, index) => {
+                  return (
+                    <ListItem key={index} bg={'white'} borderRadius={30} p={4}>
+                      <HStack>
+                        <Stack spacing={0.5}>
+                          <Text fontSize="xs" color={'gray.500'}>
+                            {data.Name}
+                          </Text>
+                          <Box fontSize="md" w={300} overflowWrap="break-word">
+                            {data.Text}
+                          </Box>
+                        </Stack>
+                        <Text fontSize="xs" color={'gray.300'}>
+                          {convertUnix4Date(data.Date).toString()}
                         </Text>
-                        <Box
-                          fontSize="md"
-                          w={300}
-                          overflowWrap="break-word"
-                          bg="white"
-                        >
-                          {data.Text}
-                        </Box>
-                      </Stack>
-                      <Text fontSize="xs" color={'gray.300'}>
-                        {convertUnix4Date(data.Date).toString()}
-                      </Text>
-                    </HStack>
-                  </ListItem>
-                )
-              })}
-            </List>
-          </div>
-          <Spacer />
-          <div className="msg">
-            <InputGroup w={650} bg="white">
-              <InputRightElement>
-                <Button
-                  w={50}
-                  colorScheme="teal"
-                  variant="solid"
-                  onClick={onClickSend}
-                >
-                  Send
-                </Button>
-              </InputRightElement>
-              <Stack>
-                <Input
-                  w={200}
-                  h={45}
-                  placeholder="名前"
-                  value={sendUser}
-                  onChange={onChangeSenderName}
-                />
-                <Input
-                  w={650}
-                  h={45}
-                  variant="flushed"
-                  placeholder="メッセージを送ろう"
-                  value={chatMsg}
-                  onChange={onChangeMessage}
-                />
-              </Stack>
-            </InputGroup>
-          </div>
-        </VStack>
-      </div>
+                      </HStack>
+                    </ListItem>
+                  )
+                })}
+              </List>
+            </div>
+            <Spacer />
+            <div className="msg">
+              <InputGroup w={650}>
+                <InputRightElement>
+                  <Button
+                    w={50}
+                    colorScheme="teal"
+                    variant="solid"
+                    onClick={onClickSend}
+                  >
+                    Send
+                  </Button>
+                </InputRightElement>
+                <Stack>
+                  <Input
+                    w={200}
+                    h={45}
+                    bg={'white'}
+                    placeholder="名前"
+                    value={sendUser}
+                    onChange={onChangeSenderName}
+                  />
+                  <Input
+                    w={650}
+                    h={45}
+                    bg={'white'}
+                    variant="flushed"
+                    placeholder="メッセージを送ろう"
+                    value={chatMsg}
+                    onChange={onChangeMessage}
+                  />
+                </Stack>
+              </InputGroup>
+            </div>
+          </VStack>
+        </div>
+      </Box>
     </ChakraProvider>
   )
 }
