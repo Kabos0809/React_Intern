@@ -6,9 +6,9 @@ import {
   Button,
   VStack,
   Stack,
-  ChakraBaseProvider,
+  ChakraProvider,
 } from '@chakra-ui/react'
-import { ViewIcon } from '@chakra-ui/icons'
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
@@ -29,17 +29,40 @@ const Login: React.FC = (props: any) => {
     return () => unSub()
   }, [])
 
+  const onClickSubmit = () => {
+    if (isLogin) {
+      return async () => {
+        try {
+          await signInWithEmailAndPassword(auth, email, pw)
+          props.history.push('/')
+        } catch (e) {
+          console.log(e)
+        }
+      }
+    } else {
+      return async () => {
+        try {
+          await createUserWithEmailAndPassword(auth, email, pw)
+          props.history.push('/')
+        } catch (e) {
+          console.log(e)
+        }
+      }
+    }
+  }
+
   return (
-    <ChakraBaseProvider>
+    <ChakraProvider>
       <div className="login">
-        <Stack>
+        <VStack>
           <VStack>
             <Stack>
               <Input
                 name="email"
                 value={email}
                 type="email"
-                w={450}
+                w={500}
+                h={50}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setEmail(e.target.value)
                 }
@@ -49,7 +72,8 @@ const Login: React.FC = (props: any) => {
                 <Input
                   name="pw"
                   value={pw}
-                  w={450}
+                  w={500}
+                  h={50}
                   type={isShow ? 'text' : 'password'}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setPW(e.target.value)
@@ -57,53 +81,36 @@ const Login: React.FC = (props: any) => {
                   placeholder="PassWord"
                 />
                 <InputRightElement>
-                  <Button
-                    rightIcon={<ViewIcon />}
-                    onClick={() => setShow(!isShow)}
-                  >
-                    {isShow ? 'unvisible' : 'show'}
+                  <Button onClick={() => setShow(!isShow)}>
+                    {isShow ? <ViewIcon /> : <ViewOffIcon />}
                   </Button>
                 </InputRightElement>
               </InputGroup>
             </Stack>
             <Button
-              variant="contained"
-              color="primary"
+              variant="solid"
+              colorScheme="teal"
               size="small"
-              onClick={
-                isLogin
-                  ? async () => {
-                      try {
-                        await signInWithEmailAndPassword(auth, email, pw)
-                        props.history.push('/')
-                      } catch (e) {
-                        console.log(e)
-                      }
-                    }
-                  : async () => {
-                      try {
-                        await createUserWithEmailAndPassword(auth, email, pw)
-                        props.history.push('/')
-                      } catch (e) {
-                        console.log(e)
-                      }
-                    }
-              }
+              onClick={onClickSubmit}
+              w={80}
+              h={45}
             >
               {isLogin ? 'Login' : 'SignUp'}
             </Button>
           </VStack>
           <Button
+            variant="link"
             colorScheme="teal"
+            color="black"
             onClick={() => {
               setIsLogin(!isLogin)
             }}
           >
             {isLogin ? 'アカウントをお持ちでない方' : 'アカウントをお持ちの方'}
           </Button>
-        </Stack>
+        </VStack>
       </div>
-    </ChakraBaseProvider>
+    </ChakraProvider>
   )
 }
 
