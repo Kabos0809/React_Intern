@@ -69,14 +69,21 @@ const Chat: React.FC = () => {
 
   return (
     <ChakraProvider>
-      <Box bg={'gray.50'} h={720}>
+      <Box bg={'white'} h={720}>
         <div className="chat">
           <VStack>
             <div className="chatlog">
               <List w={650} h={580} spacing={2} overflowY="scroll">
                 {chatLogs.map((data, index) => {
                   return (
-                    <ListItem key={index} bg={'white'} borderRadius={30} p={4}>
+                    <ListItem
+                      key={index}
+                      bg={'gray.50'}
+                      borderRadius={30}
+                      p={4}
+                      shadow={'base'}
+                      w={600}
+                    >
                       <HStack>
                         <Stack spacing={0.5}>
                           <Text fontSize="xs" color={'gray.500'}>
