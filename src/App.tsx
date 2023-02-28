@@ -1,25 +1,41 @@
 import React from 'react'
-import logo from 'logo.svg'
-import 'App.css'
+import { signOut } from '@firebase/auth'
+import { Button, ChakraProvider, HStack } from '@chakra-ui/react'
+import auth from 'config/firebaseConfig'
 
 const App: React.FC = () => {
+  const user = auth.currentUser
+
+  const onClickSignOut = async () => {
+    try {
+      await signOut(auth)
+    } catch (e) {
+      console.log('Failed to sign out. Please try again.')
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ChakraProvider>
+      <head>
+        <div className="header">
+          <HStack>
+            {user === null ? (
+              <Button variant="outline" colorScheme="teal">
+                LOGIN
+              </Button>
+            ) : (
+              <Button
+                variant="outline"
+                colorScheme="red"
+                onClick={onClickSignOut}
+              >
+                LOGOUT
+              </Button>
+            )}
+          </HStack>
+        </div>
+      </head>
+    </ChakraProvider>
   )
 }
 

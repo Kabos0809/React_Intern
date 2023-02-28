@@ -10,26 +10,24 @@ import {
 } from '@chakra-ui/react'
 import { ViewIcon } from '@chakra-ui/icons'
 import {
-  getAuth,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth'
-
-const auth = getAuth()
+import auth from 'config/firebaseConfig'
 
 const Login: React.FC = (props: any) => {
-  const [isShow, setShow] = useState(false)
-  const [isLogin, setIsLogin] = useState(true)
-  const [email, setEmail] = useState('')
-  const [pw, setPW] = useState('')
+  const [isShow, setShow] = useState<boolean>(false)
+  const [isLogin, setIsLogin] = useState<boolean>(true)
+  const [email, setEmail] = useState<string>('')
+  const [pw, setPW] = useState<string>('')
 
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, (user) => {
       user && props.history.push('/')
     })
     return () => unSub()
-  }, [props.history])
+  }, [])
 
   return (
     <ChakraBaseProvider>
@@ -92,6 +90,7 @@ const Login: React.FC = (props: any) => {
             </Button>
           </VStack>
           <Button
+            colorScheme="teal"
             onClick={() => {
               setIsLogin(!isLogin)
             }}

@@ -2,13 +2,15 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from 'components/Login'
 import Chat from 'components/Chat'
+import App from 'App'
 
 const RouterConf: React.FC = () => {
   return (
     <BrowserRouter>
+      <App />
       <Routes>
         <Route path="/" element={<Chat />} />
-        <Route path="login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   )
