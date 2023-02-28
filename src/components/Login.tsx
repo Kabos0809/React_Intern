@@ -34,34 +34,38 @@ const Login: React.FC = (props: any) => {
       <div className="login">
         <Stack>
           <VStack>
-            <Input
-              name="email"
-              value={email}
-              type="email"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setEmail(e.target.value)
-              }
-              placeholder="Email"
-            />
-            <InputGroup>
+            <Stack>
               <Input
-                name="pw"
-                value={pw}
-                type={isShow ? 'text' : 'password'}
+                name="email"
+                value={email}
+                type="email"
+                w={450}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setPW(e.target.value)
+                  setEmail(e.target.value)
                 }
-                placeholder="PassWord"
+                placeholder="Email"
               />
-              <InputRightElement>
-                <Button
-                  rightIcon={<ViewIcon />}
-                  onClick={() => setShow(!isShow)}
-                >
-                  Show
-                </Button>
-              </InputRightElement>
-            </InputGroup>
+              <InputGroup w={550}>
+                <Input
+                  name="pw"
+                  value={pw}
+                  w={450}
+                  type={isShow ? 'text' : 'password'}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setPW(e.target.value)
+                  }
+                  placeholder="PassWord"
+                />
+                <InputRightElement>
+                  <Button
+                    rightIcon={<ViewIcon />}
+                    onClick={() => setShow(!isShow)}
+                  >
+                    {isShow ? 'unvisible' : 'show'}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </Stack>
             <Button
               variant="contained"
               color="primary"
@@ -95,7 +99,7 @@ const Login: React.FC = (props: any) => {
               setIsLogin(!isLogin)
             }}
           >
-            {isLogin ? 'SignUP' : 'Login'}
+            {isLogin ? 'アカウントをお持ちでない方' : 'アカウントをお持ちの方'}
           </Button>
         </Stack>
       </div>
