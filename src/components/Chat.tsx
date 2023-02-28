@@ -82,7 +82,7 @@ const Chat: React.FC = () => {
                       borderRadius={30}
                       p={4}
                       shadow={'base'}
-                      w={600}
+                      w={620}
                     >
                       <HStack>
                         <Stack spacing={0.5}>
