@@ -7,6 +7,7 @@ import {
   VStack,
   Stack,
   ChakraProvider,
+  Heading,
 } from '@chakra-ui/react'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import {
@@ -52,6 +53,7 @@ const Login: React.FC = () => {
       <div className="login">
         <VStack>
           <VStack>
+            <Heading>{isLogin ? 'LOGIN' : 'SIGNUP'}</Heading>
             <Stack>
               <Input
                 name="email"
@@ -78,7 +80,7 @@ const Login: React.FC = () => {
                 />
                 <InputRightElement>
                   <Button onClick={() => setShow(!isShow)}>
-                    {isShow ? <ViewIcon /> : <ViewOffIcon />}
+                    {!isShow ? <ViewIcon /> : <ViewOffIcon />}
                   </Button>
                 </InputRightElement>
               </InputGroup>
