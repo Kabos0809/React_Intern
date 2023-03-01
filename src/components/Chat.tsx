@@ -45,6 +45,8 @@ const Chat: React.FC = () => {
   useEffect(() => {
     socket.on('chat', () => {
       setChatLogs(() => getChatLog())
+      const list = document.getElementById('list')
+      list?.scrollTo(0, list.scrollHeight)
     })
   }, [])
 
@@ -62,8 +64,10 @@ const Chat: React.FC = () => {
     msg.Text = chatMsg
     e.preventDefault()
     socket.emit('chat-message', msg)
+
     const newLog = [...chatLogs, msg]
     localStorage.setItem('log', JSON.stringify(newLog))
+
     setChatMsg('')
   }
 
@@ -73,7 +77,7 @@ const Chat: React.FC = () => {
         <div className="chat">
           <VStack>
             <div className="chatlog">
-              <List w={650} h={550} spacing={2} overflowY="scroll">
+              <List id="list" w={650} h={550} spacing={2} overflowY="scroll">
                 {chatLogs.map((data, index) => {
                   return (
                     <ListItem
