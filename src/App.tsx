@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { signOut, User } from '@firebase/auth'
+import React, { useEffect } from 'react'
+import { signOut } from 'firebase/auth'
 import { Button, ChakraProvider, HStack } from '@chakra-ui/react'
-import { onAuthStateChanged } from '@firebase/auth'
+import { Link } from 'react-router-dom'
+import { onAuthStateChanged } from 'firebase/auth'
+import { useAuthState } from 'react-firebase-hooks/auth'
 import auth from 'config/firebaseConfig'
 
 const App: React.FC = () => {
-  const [user, setUesr] = useState<User | null>(auth.currentUser)
+  const [user] = useAuthState(auth)
   const onClickSignOut = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
@@ -18,9 +20,7 @@ const App: React.FC = () => {
   }
 
   useEffect(() => {
-    const unSub = onAuthStateChanged(auth, () => {
-      setUesr(auth.currentUser)
-    })
+    const unSub = onAuthStateChanged(auth, (user) => user)
     return () => unSub()
   }, [])
 
@@ -28,8 +28,12 @@ const App: React.FC = () => {
     <ChakraProvider>
       <div className="header">
         <HStack>
-          {user === null ? (
-            <></>
+          {!user ? (
+            <Link to="/login">
+              <Button variant="outline" colorScheme="teal">
+                LOGIN
+              </Button>
+            </Link>
           ) : (
             <Button
               variant="outline"
