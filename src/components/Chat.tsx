@@ -40,6 +40,8 @@ const Chat: React.FC = () => {
   const [chatMsg, setChatMsg] = useState('')
   const [sendUser, setSendUser] = useState('名無しさん')
 
+  const isError = chatMsg === ''
+
   let msg: Msg = new Msg(sendUser)
 
   useEffect(() => {
@@ -77,7 +79,7 @@ const Chat: React.FC = () => {
         <div className="chat">
           <VStack>
             <div className="chatlog">
-              <List id="list" w={650} h={550} spacing={2} overflowY="scroll">
+              <List id="list" w={650} h={520} spacing={2} overflowY="scroll">
                 {chatLogs.map((data, index) => {
                   return (
                     <ListItem
@@ -110,14 +112,20 @@ const Chat: React.FC = () => {
             <div className="msg">
               <InputGroup w={650}>
                 <InputRightElement>
-                  <Button
-                    w={50}
-                    colorScheme="teal"
-                    variant="solid"
-                    onClick={onClickSend}
-                  >
-                    Send
-                  </Button>
+                  {!isError ? (
+                    <Button
+                      w={50}
+                      colorScheme="teal"
+                      variant="solid"
+                      onClick={onClickSend}
+                    >
+                      Send
+                    </Button>
+                  ) : (
+                    <Button w={50} colorScheme="teal" variant="solid">
+                      Send
+                    </Button>
+                  )}
                 </InputRightElement>
                 <Stack>
                   <Input
@@ -137,6 +145,13 @@ const Chat: React.FC = () => {
                     value={chatMsg}
                     onChange={onChangeMessage}
                   />
+                  {isError ? (
+                    <Text fontSize="sm" color="red.500">
+                      メッセージを入力してください
+                    </Text>
+                  ) : (
+                    <></>
+                  )}
                 </Stack>
               </InputGroup>
             </div>
