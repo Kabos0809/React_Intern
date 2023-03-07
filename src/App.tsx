@@ -1,7 +1,6 @@
 import React from 'react'
 import { signOut } from 'firebase/auth'
 import { Button, ChakraProvider, HStack } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import auth from 'config/firebaseConfig'
 
@@ -23,11 +22,7 @@ const App: React.FC = () => {
       <div className="header">
         <HStack>
           {!user ? (
-            <Link to="/login">
-              <Button variant="outline" colorScheme="teal">
-                LOGIN
-              </Button>
-            </Link>
+            <></>
           ) : (
             <Button
               variant="outline"
