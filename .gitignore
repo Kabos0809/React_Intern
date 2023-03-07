@@ -23,3 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 .env
+
+ngrok
+ngrok-stable-linux-amd64.zip
