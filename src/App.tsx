@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { signOut } from 'firebase/auth'
 import { Button, ChakraProvider, HStack } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
-import { onAuthStateChanged } from 'firebase/auth'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import auth from 'config/firebaseConfig'
 
@@ -18,11 +17,6 @@ const App: React.FC = () => {
       console.log('Failed to sign out. Please try again.')
     }
   }
-
-  useEffect(() => {
-    const unSub = onAuthStateChanged(auth, (user) => user)
-    return () => unSub()
-  }, [])
 
   return (
     <ChakraProvider>
